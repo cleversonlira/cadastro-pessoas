@@ -51,21 +51,20 @@ public class PessoaForm {
 		this.sexo = sexo;
 	}
 	
-	public Pessoa converter() {
-		Pessoa pessoa = new Pessoa();
-		pessoa.setCpf(this.cpf);
-		
-		pessoa.setDataNascimento(LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-		pessoa.setNome(this.nome);
-		pessoa.setSexo(Genero.valueOf(sexo.toUpperCase()));
-		return pessoa;
+	public Pessoa converter() {		
+		return preenchePessoa(new Pessoa());
 	}
 	
 	public void atualizar(Pessoa pessoa) {
+		preenchePessoa(pessoa);
+	}
+	
+	private Pessoa preenchePessoa(Pessoa pessoa) {
 		pessoa.setCpf(this.cpf);
-		pessoa.setDataNascimento(LocalDate.parse(dataNascimento));
+		pessoa.setDataNascimento(LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		pessoa.setNome(this.nome);
-		pessoa.setSexo(Genero.valueOf(sexo.toUpperCase()));
+		pessoa.setSexo(Genero.valueOf(sexo.toUpperCase().replaceAll(" ", "_")));
+		return pessoa;
 	}
 
 }

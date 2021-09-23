@@ -1,5 +1,6 @@
 package br.com.cadastroapi.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.cadastroapi.controller.dto.PessoaDTO;
 import br.com.cadastroapi.controller.form.PessoaForm;
 import br.com.cadastroapi.modelo.Pessoa;
 import br.com.cadastroapi.repository.PessoaRepository;
@@ -28,8 +32,8 @@ public class PessoaController {
 	private PessoaRepository repository;
 		
 	@GetMapping
-	public List<Pessoa> listar() {
-		return repository.findAll();
+	public List<PessoaDTO> listar() {
+		return PessoaDTO.converterLista(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
@@ -42,20 +46,32 @@ public class PessoaController {
 	}
 	
 	@PostMapping
-	public void criar(@RequestBody @Valid PessoaForm form) {
-		repository.save(form.converter());
+	public ResponseEntity<PessoaDTO> criar(@RequestBody @Valid PessoaForm form, UriComponentsBuilder uriBuilder) {
+		Pessoa pessoa = form.converter();
+		repository.save(pessoa);
+		URI uri = uriBuilder.path("/pessoas/{id}").buildAndExpand(pessoa.getId()).toUri();
+		return ResponseEntity.created(uri).body(new PessoaDTO(pessoa));
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public void atualizar(@PathVariable Long id, @RequestBody PessoaForm form) {
+	public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @RequestBody PessoaForm form) {
 		Optional<Pessoa> pessoa = repository.findById(id);
-		form.atualizar(pessoa.get());
+		if (pessoa.isPresent()) {
+			form.atualizar(pessoa.get());
+			return ResponseEntity.ok(new PessoaDTO(pessoa.get()));			
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable Long id) {
-		repository.deleteById(id);
+	public ResponseEntity<PessoaDTO> deletar(@PathVariable Long id) {		
+		Optional<Pessoa> pessoa = repository.findById(id);
+		if (pessoa.isPresent()) {
+			repository.deleteById(id);
+			return ResponseEntity.ok().build();			
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 }
