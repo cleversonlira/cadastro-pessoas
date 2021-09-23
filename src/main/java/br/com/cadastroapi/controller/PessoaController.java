@@ -37,12 +37,12 @@ public class PessoaController {
 	}
 	
 	@GetMapping("/{id}")
-	public Pessoa buscarPorId(@PathVariable Long id) {
+	public ResponseEntity<PessoaDTO> buscarPorId(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = repository.findById(id);
 		if (pessoa.isPresent()) {
-			return pessoa.get();
+			return ResponseEntity.ok(new PessoaDTO(pessoa.get()));			
 		}
-		return null;
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
