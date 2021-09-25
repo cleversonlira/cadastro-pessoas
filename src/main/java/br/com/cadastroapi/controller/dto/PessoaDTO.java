@@ -1,8 +1,8 @@
 package br.com.cadastroapi.controller.dto;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import br.com.cadastroapi.modelo.Pessoa;
 
@@ -42,8 +42,8 @@ public class PessoaDTO {
 		return sexo;
 	}
 	
-	public static List<PessoaDTO> converterLista(List<Pessoa> pessoas) {		
-		return pessoas.stream().map(pessoa -> new PessoaDTO(pessoa)).collect(Collectors.toList());
+	public static Page<PessoaDTO> converterLista(Page<Pessoa> pessoas) {		
+		return pessoas.map(PessoaDTO::new);
 	}
 
 }

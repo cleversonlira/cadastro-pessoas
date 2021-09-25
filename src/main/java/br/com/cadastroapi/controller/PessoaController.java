@@ -1,13 +1,14 @@
 package br.com.cadastroapi.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +33,8 @@ public class PessoaController {
 	private PessoaRepository repository;
 		
 	@GetMapping
-	public List<PessoaDTO> listar() {
-		return PessoaDTO.converterLista(repository.findAll());
+	public Page<PessoaDTO> listar(Pageable paginacao) {
+		return PessoaDTO.converterLista(repository.findAll(paginacao));
 	}
 	
 	@GetMapping("/{id}")
@@ -46,6 +47,7 @@ public class PessoaController {
 	}
 	
 	@PostMapping
+	@Transactional
 	public ResponseEntity<PessoaDTO> criar(@RequestBody @Valid PessoaForm form, UriComponentsBuilder uriBuilder) {
 		Pessoa pessoa = form.converter();
 		repository.save(pessoa);
@@ -55,7 +57,7 @@ public class PessoaController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @RequestBody PessoaForm form) {
+	public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @RequestBody @Valid PessoaForm form) {
 		Optional<Pessoa> pessoa = repository.findById(id);
 		if (pessoa.isPresent()) {
 			form.atualizar(pessoa.get());
@@ -65,6 +67,7 @@ public class PessoaController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
 	public ResponseEntity<PessoaDTO> deletar(@PathVariable Long id) {		
 		Optional<Pessoa> pessoa = repository.findById(id);
 		if (pessoa.isPresent()) {

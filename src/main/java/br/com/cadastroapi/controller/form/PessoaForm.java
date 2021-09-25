@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.cadastroapi.modelo.Genero;
 import br.com.cadastroapi.modelo.Pessoa;
 
@@ -12,7 +14,7 @@ public class PessoaForm {
 
 	@NotBlank
 	private String nome;
-	@NotBlank
+	@NotBlank @CPF
 	private String cpf;
 	@NotBlank
 	private String dataNascimento;
