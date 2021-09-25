@@ -22,9 +22,9 @@ As principais funcionalidades que foram implementadas, são:
 
 Este projeto foi um experimento de desenvolvimento com um prazo curto. Simulando como seria na vida real de um desenvolvedor em uma empresa.
 
-# Como o Projeto Funciona?
+# Posso rodar este projeto local?
 
-Se deseja clonar este projeto e executá-lo, certifique-se de ter um MySQL disponível e adicionar as configurações no arquivo src/main/resources/application.properties
+Se deseja clonar este projeto e executá-lo, certifique-se de ter um MySQL, ou outro banco SQL, disponível e adicionar as configurações no arquivo src/main/resources/application.properties
 
 Se estiver usando o IntelliJ, não esqueça de fazer com que o Maven baixe as dependências do pom.xml
 
