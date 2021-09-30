@@ -16,7 +16,7 @@ public class Pessoa {
 	private Long id;
 	private String nome;
 	
-	@CPF(message = "CPF invalido")
+	@CPF
 	private String cpf;
 	private LocalDate dataNascimento;
 	private Genero sexo;
