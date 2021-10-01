@@ -1,0 +1,10 @@
+package br.com.cadastroapi.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/logar")
+public class LoginController {
+
+}
