@@ -48,13 +48,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/pessoas").permitAll()
 		.antMatchers(HttpMethod.GET, "/pessoas/*").permitAll()
-		.antMatchers(HttpMethod.POST, "/pessoas").permitAll()
-		.antMatchers(HttpMethod.POST, "/pessoas/*").permitAll()
-		.antMatchers(HttpMethod.PUT, "/pessoas/*").permitAll()
-		.antMatchers(HttpMethod.DELETE, "/pessoas/*").permitAll().anyRequest().authenticated()
-		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);		
+		.anyRequest().authenticated();
+//		.and().csrf().disable()
+//		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);		
 	}
 	
 	//Configuracoes de recursos estaticos (JS, imagens, CSS ...)
