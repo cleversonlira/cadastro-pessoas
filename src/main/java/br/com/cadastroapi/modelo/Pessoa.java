@@ -7,19 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 @Entity
 public class Pessoa {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	
-	@CPF
 	private String cpf;
 	private LocalDate dataNascimento;
 	private Genero sexo;
+	private String nacionalidade;
+	private String naturalidade;
 
 	public Long getId() {
 		return id;
@@ -59,6 +58,22 @@ public class Pessoa {
 
 	public void setSexo(Genero sexo) {
 		this.sexo = sexo;
+	}
+
+	public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
+	}
+
+	public String getNaturalidade() {
+		return naturalidade;
+	}
+
+	public void setNaturalidade(String naturalidade) {
+		this.naturalidade = naturalidade;
 	}
 
 }
