@@ -86,7 +86,9 @@ public class PessoaForm {
 		pessoa.setCpf(this.cpf);
 		pessoa.setDataNascimento(LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		pessoa.setNome(this.nome);
-		pessoa.setSexo(Genero.valueOf(sexo.toUpperCase().replaceAll(" ", "_")));
+		pessoa.setSexo(Genero.valueOf(this.sexo.toUpperCase().replaceAll(" ", "_")));
+		pessoa.setNacionalidade(this.nacionalidade);
+		pessoa.setNaturalidade(this.naturalidade);
 		return pessoa;
 	}
 
