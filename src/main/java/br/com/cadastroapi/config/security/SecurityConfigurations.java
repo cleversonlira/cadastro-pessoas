@@ -48,21 +48,17 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/pessoas").permitAll()
 		.antMatchers(HttpMethod.GET, "/pessoas/*").permitAll()
-		.anyRequest().authenticated();
-		
-//		.and().csrf().disable()
-//		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);		
+		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.anyRequest().authenticated()
+		.and().csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		//.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);		
 	}
 	
 	//Configuracoes de recursos estaticos (JS, imagens, CSS ...)
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(new BCryptPasswordEncoder().encode("12345678"));
 	}
 	
 }
