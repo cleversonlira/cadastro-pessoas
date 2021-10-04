@@ -14,12 +14,17 @@ public class PessoaForm {
 
 	@NotBlank
 	private String nome;
-	@NotBlank @CPF
+	@NotBlank
+	@CPF
 	private String cpf;
 	@NotBlank
 	private String dataNascimento;
 	@NotBlank
 	private String sexo;
+	@NotBlank
+	private String nacionalidade;
+	@NotBlank
+	private String naturalidade;
 
 	public String getNome() {
 		return nome;
@@ -52,15 +57,31 @@ public class PessoaForm {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	
-	public Pessoa converter() {		
+
+	public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
+	}
+
+	public String getNaturalidade() {
+		return naturalidade;
+	}
+
+	public void setNaturalidade(String naturalidade) {
+		this.naturalidade = naturalidade;
+	}
+
+	public Pessoa converter() {
 		return preenchePessoa(new Pessoa());
 	}
-	
+
 	public void atualizar(Pessoa pessoa) {
 		preenchePessoa(pessoa);
 	}
-	
+
 	private Pessoa preenchePessoa(Pessoa pessoa) {
 		pessoa.setCpf(this.cpf);
 		pessoa.setDataNascimento(LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd-MM-yyyy")));

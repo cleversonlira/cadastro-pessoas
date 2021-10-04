@@ -13,6 +13,8 @@ public class PessoaDTO {
 	private String cpf;
 	private String dataNascimento;
 	private String sexo;
+	private String nacionalidade;
+	private String naturalidade;
 
 	public PessoaDTO(Pessoa pessoa) {
 		this.id = pessoa.getId();
@@ -20,12 +22,14 @@ public class PessoaDTO {
 		this.cpf = pessoa.getCpf();
 		this.dataNascimento = pessoa.getDataNascimento().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		this.sexo = pessoa.getSexo().toString().replaceAll("_", " ").toLowerCase();
+		this.nacionalidade = pessoa.getNacionalidade();
+		this.naturalidade = pessoa.getNaturalidade();
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -41,9 +45,17 @@ public class PessoaDTO {
 	public String getSexo() {
 		return sexo;
 	}
-	
-	public static Page<PessoaDTO> converterLista(Page<Pessoa> pessoas) {		
+
+	public static Page<PessoaDTO> converterLista(Page<Pessoa> pessoas) {
 		return pessoas.map(PessoaDTO::new);
+	}
+
+	public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+	public String getNaturalidade() {
+		return naturalidade;
 	}
 
 }
