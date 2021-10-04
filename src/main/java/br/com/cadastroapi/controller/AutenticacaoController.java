@@ -34,7 +34,7 @@ public class AutenticacaoController {
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = tokenService.gerarToken(authentication);
 			
-			return ResponseEntity.ok(new TokenDTO(token, "Barear"));			
+			return ResponseEntity.ok(new TokenDTO(token, "Baerer"));			
 		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
 		}
